@@ -1,0 +1,5 @@
+# Every hour, copy changes to environment files to Environment/undotfiles
+* * * * *   rsync $HOME/.crontab Environment/undotfiles/crontab
+* * * * *   rsync $HOME/.zshrc Environment/undotfiles/zshrc
+* * * * *   rsync $HOME/.vimrc Environment/undotfiles/vimrc
+
