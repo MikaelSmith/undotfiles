@@ -51,6 +51,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+unsetopt autopushd
+
 export PATH="/usr/local/bin:$PATH"
 eval "$(rbenv init -)"
 
