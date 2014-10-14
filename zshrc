@@ -5,7 +5,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -52,9 +53,17 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 unsetopt autopushd
+unsetopt inc_append_history
+unsetopt share_history
 
-export PATH="/usr/local/bin:$PATH"
-eval "$(rbenv init -)"
+# This is the usual boot2docker redirect. If it's not available, boot2docker will ask
+# that DOCKER_HOST be updated on startup.
+export DOCKER_HOST=tcp://192.168.59.103:2375
+
+# Add Homebrew install location to path.
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+#eval "$(rbenv init -)"
 
 alias be="bundle exec"
 alias ls="ls -pG"
@@ -63,7 +72,24 @@ alias vi="vim"
 alias h="history"
 alias cdr="cd ~/puppetlabs"
 
-PROMPT="%h %m %~ %% "
+listvm() { curl --url http://vcloud.delivery.puppetlabs.net/vm 2> /dev/null | ruby -e 'require "json"; JSON.parse(STDIN.read).each { |vm| puts vm }' }
+getvm() { curl -d --url http://vcloud.delivery.puppetlabs.net/vm/$1 2> /dev/null | ruby -e 'require "json"; resp = JSON.parse(STDIN.read); puts resp["'$1'"]["hostname"]'}
+sshvm() { ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa-acceptance root@$1 "${@:2}" }
+rmvm() { curl -X DELETE --url http://vcloud.delivery.puppetlabs.net/vm/$1 }
+
+runmaster () {
+        testdir=${1:-.}
+	mkdir -p $testdir/master
+	mkdir -p $testdir/master/conf/modules
+	bundle exec puppet master --autosign=true --no-daemonize --debug --verbose --confdir=$testdir/master/conf --vardir=$testdir/master/var --ca --certname localhost
+}
+runagent () {
+        testdir=${1:-.}
+	mkdir -p $testdir/client
+	bundle exec puppet agent --no-daemonize --debug --trace --verbose --confdir=$testdir/client/conf --vardir=$testdir/client/var --onetime --server localhost
+}
+
+#PROMPT="%h %{%F{magenta}%}%m%{%f%} %{%F{cyan}%}%~%{%f%} %% "
 
 # Optional up/down arrows for search.
 #autoload up-line-or-beginning-search
