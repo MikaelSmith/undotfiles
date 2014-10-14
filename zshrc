@@ -63,7 +63,7 @@ export DOCKER_HOST=tcp://192.168.59.103:2375
 # Add Homebrew install location to path.
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
-#eval "$(rbenv init -)"
+eval "$(rbenv init -)"
 
 alias be="bundle exec"
 alias ls="ls -pG"
