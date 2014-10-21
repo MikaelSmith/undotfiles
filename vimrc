@@ -46,19 +46,16 @@ set termencoding=utf-8
 
 :set autoindent
 :set showmatch
-":set shiftwidth=4
-":set softtabstop=4
-":set expandtab
 :set number
 
 " match pairs of < and >
 autocmd FileType cpp set mps+=<:>
 
 :syn on
-:map #2 :set shiftwidth=2
-:map #4 :set shiftwidth=4
-:map #5 :set shiftwidth=5
-:map #8 :set shiftwidth=8
+:map #2 :set shiftwidth=2 softtabstop=2
+:map #4 :set shiftwidth=4 softtabstop=4
+:map #5 :set shiftwidth=5 softtabstop=5
+:map #8 :set shiftwidth=8 softtabstop=8
 :map #9 :set wrapmargin=15
 
 nmap <S-Up> v<Up>

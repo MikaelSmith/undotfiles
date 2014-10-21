@@ -46,7 +46,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vagrant)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -58,7 +58,9 @@ unsetopt share_history
 
 # This is the usual boot2docker redirect. If it's not available, boot2docker will ask
 # that DOCKER_HOST be updated on startup.
-export DOCKER_HOST=tcp://192.168.59.103:2375
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=~/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
 
 # Add Homebrew install location to path.
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"

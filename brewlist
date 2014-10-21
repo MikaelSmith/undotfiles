@@ -23,6 +23,7 @@ libmpc08
 libtool
 libyaml
 log4cxx
+mackup
 macvim
 mpfr2
 openssl
