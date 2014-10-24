@@ -2,4 +2,5 @@ caskroom/cask
 fnichol/dvm
 homebrew/binary
 homebrew/versions
+puppetlabs/private-tap
 rcmdnk/file

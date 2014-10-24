@@ -1,12 +1,27 @@
-# Update profile before installing any packages, in case they modify it.
-Set-Content $profile @"
-Set-Alias np notepad
-Set-Alias clion "C:\Program Files (x86)\JetBrains\CLion 138.1965.18\bin\clion64.exe"
-"@
-
 # Install packages
 iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
-choco install git make cmake mingw 7zip ag diffmerge notepad2 python2 ruby wincommandpaste VisualStudioExpress2013WindowsDesktop poshgit git-credential-winstore ActivePerl
+choco install git cmake mingw 7zip.commandline ag diffmerge notepad2 ruby wincommandpaste git-credential-winstore
+
+# Setup PATH
+$env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+# Chocolatey install of poshgit hasn't been working reliably, install from source instead.
+#choco install poshgit
+git clone https://github.com/dahlbyk/posh-git
+.\posh-git\install.ps1
+. $PROFILE
+
+# Add bundle
+gem install bundle
+
+# Optional packages
+choco install make python2 VisualStudioExpress2013WindowsDesktop ActivePerl ruby2.devkit
+
+# Setup ruby devkit
+$RubyInstall = Split-Path (Split-Path (Get-Command ruby).Path)
+C:\DevKit2\dk.rb init
+Add-Content config.yml "- $RubyInstall"
+C:\DevKit2\dk.rb install
 
 # Clean up the environment
 $vcpath = "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin"
@@ -22,4 +37,6 @@ if ($path -contains $gitpath) {
 [Environment]::SetEnvironmentVariable("Path", $path -join ";", [System.EnvironmentVariableTarget]::Machine)
 
 # Figure out how to set the keyboard to Dvorak
+Set-ItemProperty -Path "Microsoft.PowerShell.Core\Registry::HKEY_USERS\.DEFAULT\Keyboard Layout\Preload" -Name 1 -Value 00010409
+Set-ItemProperty -Path "HKCU:\Keyboard Layout\Preload" -Name 1 -Value 00010409
 
