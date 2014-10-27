@@ -5,11 +5,17 @@ choco install git cmake mingw 7zip.commandline ag diffmerge notepad2 ruby wincom
 # Setup PATH
 $env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
+# Init git
+git config --global user.email "michael.smith@puppetlabs.com"
+git config --global user.name "Michael Smith"
+git config --global push.default simple
+
 # Chocolatey install of poshgit hasn't been working reliably, install from source instead.
 #choco install poshgit
 git clone https://github.com/dahlbyk/posh-git
 .\posh-git\install.ps1
 . $PROFILE
+rm -r posh-git
 
 # Add bundle
 gem install bundle
@@ -22,6 +28,7 @@ $RubyInstall = Split-Path (Split-Path (Get-Command ruby).Path)
 C:\DevKit2\dk.rb init
 Add-Content config.yml "- $RubyInstall"
 C:\DevKit2\dk.rb install
+rm config.yml
 
 # Clean up the environment
 $vcpath = "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin"
