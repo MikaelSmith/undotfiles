@@ -13,10 +13,12 @@ doxygen
 gcc46
 gdbm
 git
+gmp
 gmp4
 hub
 icu4c
 leiningen
+libffi
 libgpg-error
 libksba
 libmpc08

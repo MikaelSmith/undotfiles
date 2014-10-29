@@ -12,5 +12,5 @@
 0 * * * *   gem list &> $HOME/.gemlist && rsync $HOME/.brewlist $HOME/Google\ Drive/Environment/undotfiles/gemlist
 0 * * * *   vagrant plugin list &> $HOME/.vagrantplugins && rsync $HOME/.vagrantplugins $HOME/Google\ Drive/Environment/undotfiles/vagrantplugins
 # Backup vagrant configuration
-0 * * * *   rsync -r --exclude='.*' $HOME/VMs $HOME/Google\ Drive/Environment/undotfiles/
+0 * * * *   rsync -r --exclude='.*' --exclude='shared' $HOME/VMs $HOME/Google\ Drive/Environment/undotfiles/
 
